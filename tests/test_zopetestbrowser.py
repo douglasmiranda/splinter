@@ -32,3 +32,8 @@ class ZopeTestBrowserDriverTest(BaseBrowserTests, unittest.TestCase):
     def test_cant_switch_to_frame(self):
         "zope.testbrowser should not be able to switch to frames"
         self.browser.switch_to_frame('frame_123')
+
+    @raises(NotImplementedError)
+    def test_cant_hover_over_element(self):
+        "zope.testbrowser should not be able to hover over elements"
+        self.browser.find_by_tag('a').first.hover()

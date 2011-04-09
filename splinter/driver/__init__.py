@@ -88,6 +88,9 @@ class ElementAPI(object):
     def click(self):
         raise NotImplementedError
 
+    def hover(self):
+        raise NotImplementedError
+
     def check(self):
         raise NotImplementedError
 
