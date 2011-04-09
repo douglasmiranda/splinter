@@ -130,8 +130,8 @@ class BaseWebDriver(DriverAPI):
 
     def switch_to_frame(self, id):
         self.driver.switch_to_frame(id)
-    
-    @contextmanager    
+
+    @contextmanager
     def get_iframe(self, id):
         self.driver.switch_to_frame(id)
         try:
