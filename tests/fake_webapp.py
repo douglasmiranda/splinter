@@ -61,7 +61,7 @@ EXAMPLE_HTML = """\
         </select>
     </form>
     <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file"> 
+        <input type="file" name="file">
         <input type="submit" name="upload" />
     </form>
     <a href="http://example.com">Link for Example.com</a>
