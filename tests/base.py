@@ -8,6 +8,7 @@ from element_does_not_exist import ElementDoestNotExistTest
 from is_element_present import IsElementPresentTest
 from iframes import IFrameElementsTest
 from async_finder import AsyncFinderTests
+from mouse_events import MouseEventsTests
 
 class BaseBrowserTests(FindElementsTest, FormElementsTest, ClickElementsTest):
 
@@ -54,7 +55,7 @@ class BaseBrowserTests(FindElementsTest, FormElementsTest, ClickElementsTest):
         element = self.browser.find_by_id("firstheader").first
         assert_equals(element.parent, self.browser)
 
-class WebDriverTests(BaseBrowserTests, IFrameElementsTest, ElementDoestNotExistTest, IsElementPresentTest, AsyncFinderTests):
+class WebDriverTests(MouseEventsTests, BaseBrowserTests, IFrameElementsTest, ElementDoestNotExistTest, IsElementPresentTest, AsyncFinderTests):
 
     def test_should_reload_a_page(self):
         "should reload a page"
@@ -82,3 +83,10 @@ class WebDriverTests(BaseBrowserTests, IFrameElementsTest, ElementDoestNotExistT
     def test_default_wait_time_should_be_2(self):
         "should driver default wait time 2"
         assert_equals(self.browser.wait_time, 2)
+
+    def test_should_contain_the_xpath_for_the_element(self):
+        "WebDriverElement should contain its xpath"
+        header_element = self.browser.find_by_css_selector('h1#firstheader').first
+        assert "h1[@id = 'firstheader']" in header_element.xpath
+        other_header_element = self.browser.find_by_xpath('//h1[@id="firstheader"]').last
+        assert_equals(other_header_element.xpath, '//h1[@id="firstheader"]')

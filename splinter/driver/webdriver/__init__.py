@@ -168,7 +168,7 @@ class BaseWebDriver(DriverAPI):
                 pass
 
             if elements:
-                return ElementList([self.element_class(element, self) for element in elements])
+                return ElementList([self.element_class(element, self, selector) for element in elements])
         return ElementList([])
 
     def find_by_css(self, css_selector):
@@ -217,9 +217,10 @@ class BaseWebDriver(DriverAPI):
 
 class WebDriverElement(ElementAPI):
 
-    def __init__(self, element, parent):
+    def __init__(self, element, parent, xpath=None):
         self._element = element
         self.parent = parent
+        self.xpath = xpath
 
     def _get_value(self):
         try:
