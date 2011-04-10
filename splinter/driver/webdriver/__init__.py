@@ -98,11 +98,15 @@ class BaseWebDriver(DriverAPI):
                 return True
         return False
 
-    def is_element_present_by_css_selector(self, css_selector, wait_time=None):
+    def is_element_present_by_css(self, css_selector, wait_time=None):
         return self.is_element_present(self.find_by_css_selector, css_selector, wait_time)
 
-    def is_element_not_present_by_css_selector(self, css_selector):
+    is_element_present_by_css_selector = is_element_present_by_css
+
+    def is_element_not_present_by_css(self, css_selector):
         return self.is_element_not_present(self.find_by_css_selector, css_selector)
+
+    is_element_not_present_by_css_selector = is_element_not_present_by_css
 
     def is_element_present_by_xpath(self, xpath, wait_time=None):
         return self.is_element_present(self.find_by_xpath, xpath, wait_time)
@@ -167,9 +171,11 @@ class BaseWebDriver(DriverAPI):
                 return ElementList([self.element_class(element, self) for element in elements])
         return ElementList([])
 
-    def find_by_css_selector(self, css_selector):
+    def find_by_css(self, css_selector):
         selector = CSSSelector(css_selector)
         return self.find_by(self.driver.find_elements_by_xpath, selector.path)
+
+    find_by_css_selector = find_by_css
 
     def find_by_xpath(self, xpath):
         return self.find_by(self.driver.find_elements_by_xpath, xpath)
@@ -183,11 +189,11 @@ class BaseWebDriver(DriverAPI):
     def find_by_id(self, id):
         return self.find_by(self.driver.find_element_by_id, id)
 
-    def fill_in(self, name, value):
+    def fill(self, name, value):
         field = self.find_by_name(name).first
         field.value = value
 
-    fill = fill_in
+    fill_in = fill
     attach_file = fill
 
     def choose(self, name):

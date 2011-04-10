@@ -44,9 +44,11 @@ class ZopeTestBrowser(DriverAPI):
         control = self._browser.getControl(element.text)
         return ElementList([ZopeTestBrowserOptionElement(control, self)])
 
-    def find_by_css_selector(self, selector):
+    def find_by_css(self, selector):
         xpath = CSSSelector(selector).path
         return self.find_by_xpath(xpath)
+
+    find_by_css_selector = find_by_css
 
     def find_by_xpath(self, xpath):
         html = lxml.html.fromstring(self.html)
@@ -88,10 +90,10 @@ class ZopeTestBrowser(DriverAPI):
     def find_link_by_href(self, href):
         return self._find_links_by_xpath("//a[@href='%s']" % href)
 
-    def fill_in(self, name, value):
+    def fill(self, name, value):
         self.find_by_name(name=name).first._control.value = value
 
-    fill = fill_in
+    fill_in = fill
 
     def choose(self, name):
         control = self._browser.getControl(name=name)
