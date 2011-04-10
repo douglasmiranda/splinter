@@ -114,9 +114,9 @@ The visited page's url can be accessed by the ``url`` attribute:
 Finding elements
 ----------------
 
-For finding elements you can use five methods, one for each selector type ``css_selector``, ``xpath``, ``tag``, ``name``, ``id``::
+For finding elements you can use five methods, one for each selector type ``css``, ``xpath``, ``tag``, ``name``, ``id``::
 
-    browser.find_by_css_selector('h1')
+    browser.find_by_css('h1')
     browser.find_by_xpath('//h1')
     browser.find_by_tag('h1')
     browser.find_by_name('name')
@@ -168,7 +168,7 @@ or
 
 These methods returns a list of all found elements.
 
-For finding links by id, tag, name or xpath you should use other find methods (``find_by_css_selector``, ``find_by_xpath``, ``find_by_tag``, ``find_by_name`` and ``find_by_id``).
+For finding links by id, tag, name or xpath you should use other find methods (``find_by_css``, ``find_by_xpath``, ``find_by_tag``, ``find_by_name`` and ``find_by_id``).
 
 Element not found exception
 ---------------------------
@@ -182,13 +182,13 @@ In order to retrieve an element's value, use the ``value`` property:
 
 ::
 
-    browser.find_by_css_selector('h1').first.value
+    browser.find_by_css('h1').first.value
 
 or
 
 ::
 
-    element = browser.find_by_css_selector('h1').first
+    element = browser.find_by_css('h1').first
     element.value
 
 
@@ -244,7 +244,7 @@ To check if an element is visible or invisible, use the ``visible`` property. Fo
 
 ::
 
-    browser.find_by_css_selector('h1').first.visible
+    browser.find_by_css('h1').first.visible
 
 will be True if the element is visible, or False if it is invisible.
 
@@ -257,7 +257,7 @@ splinter have methods for verifying if element is present in a page, that wait f
 
 ::
 
-    browser.is_element_present_by_css_selector('h1')
+    browser.is_element_present_by_css('h1')
     browser.is_element_present_by_xpath('//h1')
     browser.is_element_present_by_tag('h1')
     browser.is_element_present_by_name('name')
@@ -267,7 +267,7 @@ You can verify too if element is not present in a page:
 
 ::
 
-    browser.is_element_not_present_by_css_selector('h1')
+    browser.is_element_not_present_by_css('h1')
     browser.is_element_not_present_by_xpath('//h1')
     browser.is_element_not_present_by_tag('h1')
     browser.is_element_not_present_by_name('name')
@@ -299,3 +299,42 @@ You can use the ``get_iframe`` method and the ``with`` statement to interact wit
 
     with browser.get_iframe('iframemodal') as iframe:
         iframe.do_stuff()
+
+
+Handling alerts and prompts
+----------------------------
+
+IMPORTANT: Only Firefox webdriver has support for alerts and prompts.
+Calling any of the following methods from other webdriver (like Chrome) will raise NotImplementedError.
+
+You can deal with alerts and prompts using the ``get_alert`` method.
+
+::
+
+    alert = browser.get_alert()
+    alert.text
+    alert.accept() 
+    alert.dismiss()
+    
+    
+In case of prompts, you can answer it using the ``fill_with`` method.
+
+::
+
+    prompt = browser.get_alert()
+    prompt.text
+    prompt.fill_with('text)
+    prompt.accept()
+    prompt.dismiss()
+
+
+You can use the ``with`` statement to interacte with both alerts and prompts too.
+
+::
+
+    with browser.get_alert() as alert:
+        alert.do_stuff()
+    
+If there's not any prompt or alert, ``get_alert`` will return ``None``.
+Remember to always use at least one of the alert/prompt ending methods (accept and dismiss).
+Otherwise your browser instance will be frozen until you accept or dismiss the alert/prompt correctly.

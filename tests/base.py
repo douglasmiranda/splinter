@@ -11,6 +11,7 @@ from async_finder import AsyncFinderTests
 from mouse_events import MouseEventsTests
 from within_elements import WithinElementsTest
 
+
 class BaseBrowserTests(FindElementsTest, FormElementsTest, ClickElementsTest, WithinElementsTest):
 
     def setUp(self):
